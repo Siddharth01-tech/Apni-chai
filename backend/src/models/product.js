@@ -164,4 +164,4 @@ productSchema.index({ name: "text", description: "text" });
 
 const Product = mongoose.model("Product", productSchema);
 
-
+module.exports = Product;

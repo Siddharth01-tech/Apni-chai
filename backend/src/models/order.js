@@ -1,5 +1,6 @@
 
-import mongoose from "mongoose";
+
+const mongoose=require('mongoose');
 
 const orderItemSchema = new mongoose.Schema(
   {
@@ -206,4 +207,4 @@ orderSchema.index({ orderStatus: 1, createdAt: -1 });
 
 const Order = mongoose.model("Order", orderSchema);
 
-export default Order;
+module.exports = Order;
