@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {
-  completeaddress,
+  addaddress,
   getAddresses,
   getAddressById,
   updateAddress,
@@ -29,7 +29,7 @@ router.put("/change-password", changePassword);
 router.delete("/account", deactivateAccount);
 
 // Delivery Address CRUD
-router.post("/address", completeaddress);
+router.post("/address", addaddress);
 router.get("/address", getAddresses);
 router.get("/address/:addressId", getAddressById);
 router.put("/address/:addressId", updateAddress);

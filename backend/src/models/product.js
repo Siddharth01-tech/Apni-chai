@@ -1,28 +1,6 @@
 
 const mongoose = require('mongoose');
 
-const customizationOptionSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-
-    priceDelta: {
-      type: Number,
-      default: 0,
-      min: 0,
-    },
-
-    isAvailable: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  { _id: false }
-);
-
 const sizeSchema = new mongoose.Schema(
   {
     name: {
@@ -103,29 +81,6 @@ const productSchema = new mongoose.Schema(
       },
     },
 
-    customization: {
-      sugar: {
-        type: [customizationOptionSchema],
-        default: [],
-      },
-
-      milk: {
-        type: [customizationOptionSchema],
-        default: [],
-      },
-
-      spiceLevel: {
-        type: [customizationOptionSchema],
-        default: [],
-      },
-    },
-
-    preparationTime: {
-      type: Number,
-      default: 5,
-      min: 1,
-    },
-
     stock: {
       type: Number,
       default: 100,
@@ -135,24 +90,6 @@ const productSchema = new mongoose.Schema(
     isAvailable: {
       type: Boolean,
       default: true,
-    },
-
-    isFeatured: {
-      type: Boolean,
-      default: false,
-    },
-
-    averageRating: {
-      type: Number,
-      default: 0,
-      min: 0,
-      max: 5,
-    },
-
-    totalReviews: {
-      type: Number,
-      default: 0,
-      min: 0,
     },
   },
   { timestamps: true }
