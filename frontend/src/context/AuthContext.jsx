@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { AuthContext } from './authContextInstance';
 
+// Resolve backend API base URL from Vite environment variables
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.VITE_BACKEND_URL
+    ? `${import.meta.env.VITE_BACKEND_URL}/api/v1`
+    : '/api/v1');
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => {
@@ -21,7 +28,7 @@ export function AuthProvider({ children }) {
       }
 
       try {
-        const response = await fetch('/api/v1/auth/me', {
+        const response = await fetch(`${API_BASE_URL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,7 +57,7 @@ export function AuthProvider({ children }) {
   // Login action
   const login = async (email, password) => {
     try {
-      const response = await fetch('/api/v1/auth/login', {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -81,7 +88,7 @@ export function AuthProvider({ children }) {
   // Register action
   const register = async (name, email, phone, password) => {
     try {
-      const response = await fetch('/api/v1/auth/register', {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, phone, password }),
@@ -113,7 +120,7 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       if (token) {
-        await fetch('/api/v1/auth/logout', {
+        await fetch(`${API_BASE_URL}/auth/logout`, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -140,6 +147,7 @@ export function AuthProvider({ children }) {
         login,
         register,
         logout,
+        apiBaseUrl: API_BASE_URL,
       }}
     >
       {children}
