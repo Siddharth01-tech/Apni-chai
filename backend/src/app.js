@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authroutes");
 const userRoutes = require("./routes/userroutes");
 const productRoutes = require("./routes/productroutes");
+const categoryRoutes = require("./routes/categoryroutes");
 const uploadRoutes = require("./routes/uploadroutes");
 
 const app = express();
@@ -49,6 +50,7 @@ app.get("/api/v1/health", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/upload", uploadRoutes);
 
 // Handle unknown routes.
