@@ -1,18 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import Auth from './pages/Auth';
 
 /**
  * Chaiva Frontend Application:
- * - Clean white background layout
- * - Sticky navigation bar with interactive cart badge (default 0)
- * - Complete Homepage matching the Chaiva design system
- * - Dark forest-green footer
+ * - AuthProvider state management for user login/signup
+ * - Routing between Home and the dedicated Sign In / Sign Up page
+ * - Dynamic URL state synchronization (popstate support)
+ * - Cart count and toast feedback
  */
-export default function App() {
+function MainApp() {
   const [cartCount, setCartCount] = useState(0);
   const [toastMessage, setToastMessage] = useState(null);
+  const [currentPath, setCurrentPath] = useState(() => {
+    return typeof window !== 'undefined' ? window.location.pathname : '/';
+  });
+
+  // Sync state on browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const navigate = (path) => {
+    if (typeof window !== 'undefined') {
+      window.history.pushState({}, '', path);
+      setCurrentPath(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   const handleAddToCart = (product) => {
     setCartCount((prev) => prev + 1);
@@ -22,6 +44,16 @@ export default function App() {
     }, 2800);
   };
 
+  // Auth pages route matching
+  if (currentPath === '/login' || currentPath === '/signin') {
+    return <Auth initialMode="login" onNavigate={navigate} />;
+  }
+
+  if (currentPath === '/register' || currentPath === '/signup') {
+    return <Auth initialMode="register" onNavigate={navigate} />;
+  }
+
+  // Default: Homepage
   return (
     <div className="min-h-screen bg-white text-[#20251F] flex flex-col justify-between selection:bg-[#EAF0EA] selection:text-[#203F2D]">
       {/* Toast Notification */}
@@ -39,7 +71,7 @@ export default function App() {
       )}
 
       {/* SECTION 1: Navigation Bar */}
-      <Navbar cartCount={cartCount} />
+      <Navbar cartCount={cartCount} onNavigate={navigate} />
 
       {/* SECTIONS 2 to 5: Homepage Content */}
       <main className="flex-grow">
@@ -49,5 +81,13 @@ export default function App() {
       {/* SECTION 6: Dark Forest Green Footer */}
       <Footer />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <MainApp />
+    </AuthProvider>
   );
 }

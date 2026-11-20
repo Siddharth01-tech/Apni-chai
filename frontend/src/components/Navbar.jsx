@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
+import { useAuth } from '../context/useAuth';
 
 /**
  * Navbar component for Chaiva:
  * - Brand logo with minimalist Indian chai cup icon
  * - Center links: Home, Menu, About, Orders (Home with active indicator)
- * - Right utility actions: Search, Account/Profile, Shopping Cart (badge count 0)
+ * - Right utility actions: Search, Login pill button / Profile, Shopping Cart (badge count)
  * - Mobile responsive drawer with toggle
  */
-export default function Navbar({ cartCount = 0 }) {
+export default function Navbar({ cartCount = 0, onNavigate }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
 
   // Active route helper
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+
+  const handleLink = (path, e) => {
+    if (e) e.preventDefault();
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.href = path;
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E8EAE6] transition-all">
@@ -23,6 +35,7 @@ export default function Navbar({ cartCount = 0 }) {
           <div className="flex-shrink-0">
             <a
               href="/"
+              onClick={(e) => handleLink('/', e)}
               className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#203F2D] rounded-lg"
               aria-label="Chaiva Home"
             >
@@ -39,12 +52,9 @@ export default function Navbar({ cartCount = 0 }) {
                   strokeLinejoin="round"
                   className="transition-transform group-hover:scale-105"
                 >
-                  {/* Cup body & handle */}
                   <path d="M4 11h13a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V11z" />
                   <path d="M17 11v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2v-2" />
-                  {/* Saucer */}
                   <path d="M2 19h17" />
-                  {/* Steam / Leaf curl */}
                   <path d="M8 4c0 2 1.5 3 1.5 5" strokeWidth="1.7" />
                   <path d="M12 3c0 2 1.5 3 1.5 6" strokeWidth="1.7" />
                 </svg>
@@ -61,6 +71,7 @@ export default function Navbar({ cartCount = 0 }) {
           <nav className="hidden md:flex items-center gap-8 lg:gap-10" aria-label="Main navigation">
             <a
               href="/"
+              onClick={(e) => handleLink('/', e)}
               className={`relative py-1 text-sm font-medium transition-colors ${
                 currentPath === '/'
                   ? 'text-[#20251F] font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#20251F] after:rounded-full'
@@ -71,43 +82,46 @@ export default function Navbar({ cartCount = 0 }) {
             </a>
             <a
               href="/menu"
+              onClick={(e) => handleLink('/menu', e)}
               className={`relative py-1 text-sm font-medium transition-colors ${
                 currentPath === '/menu'
                   ? 'text-[#20251F] font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#20251F] after:rounded-full'
                   : 'text-[#20251F]/80 hover:text-[#203F2D]'
               }`}
             >
-              Menu
+              Chai Menu
             </a>
             <a
               href="/about"
+              onClick={(e) => handleLink('/about', e)}
               className={`relative py-1 text-sm font-medium transition-colors ${
                 currentPath === '/about'
                   ? 'text-[#20251F] font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#20251F] after:rounded-full'
                   : 'text-[#20251F]/80 hover:text-[#203F2D]'
               }`}
             >
-              About
+              Discover
             </a>
             <a
               href="/orders"
+              onClick={(e) => handleLink('/orders', e)}
               className={`relative py-1 text-sm font-medium transition-colors ${
                 currentPath === '/orders'
                   ? 'text-[#20251F] font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#20251F] after:rounded-full'
                   : 'text-[#20251F]/80 hover:text-[#203F2D]'
               }`}
             >
-              Orders
+              My Orders
             </a>
           </nav>
 
-          {/* RIGHT: Actions (Search, Account, Cart, Mobile Toggle) */}
-          <div className="flex items-center gap-4 sm:gap-5">
+          {/* RIGHT: Actions (Search, Login Pill / Account, Cart, Mobile Toggle) */}
+          <div className="flex items-center gap-3 sm:gap-4">
             {/* Search Icon / Toggle */}
             <button
               type="button"
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2 text-[#20251F] hover:text-[#203F2D] hover:bg-[#EAF0EA]/60 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#203F2D]"
+              className="p-2 text-[#20251F] hover:text-[#203F2D] hover:bg-[#EAF0EA]/60 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#203F2D] cursor-pointer"
               aria-label="Search chai"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
@@ -116,34 +130,75 @@ export default function Navbar({ cartCount = 0 }) {
               </svg>
             </button>
 
-            {/* Profile / Account Icon */}
-            <a
-              href="/login"
-              className="p-2 text-[#20251F] hover:text-[#203F2D] hover:bg-[#EAF0EA]/60 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#203F2D]"
-              aria-label="Customer Account"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="8" r="4" />
-                <path d="M20 21a8 8 0 0 0-16 0" />
-              </svg>
-            </a>
-
             {/* Shopping Cart with Badge */}
             <a
               href="/cart"
+              onClick={(e) => handleLink('/cart', e)}
               className="relative p-2 text-[#20251F] hover:text-[#203F2D] hover:bg-[#EAF0EA]/60 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[#203F2D]"
               aria-label={`Shopping cart with ${cartCount} items`}
             >
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="9" cy="21" r="1" />
-                <circle cx="20" cy="21" r="1" />
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                <path d="M3 6h18" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
-              {/* Badge */}
               <span className="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 bg-[#203F2D] text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none shadow-sm">
                 {cartCount}
               </span>
             </a>
+
+            {/* Auth State: Login Pill Button or User Profile Icon */}
+            {isAuthenticated ? (
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                  className="flex items-center gap-2 p-1.5 rounded-full hover:bg-[#EAF0EA] transition-colors cursor-pointer"
+                  aria-label="Account Menu"
+                >
+                  <div className="w-8 h-8 rounded-full bg-[#203F2D] text-white flex items-center justify-center text-xs font-bold">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                </button>
+
+                {profileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-lg border border-[#E8EAE6] py-2 z-50 animate-fadeIn">
+                    <div className="px-4 py-2 border-b border-[#E8EAE6]">
+                      <p className="text-xs font-semibold text-[#20251F] truncate">{user?.name}</p>
+                      <p className="text-[11px] text-[#666B65] truncate">{user?.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        handleLink('/orders');
+                      }}
+                      className="w-full text-left px-4 py-2 text-xs text-[#20251F] hover:bg-[#EAF0EA] transition-colors cursor-pointer"
+                    >
+                      My Orders
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        logout();
+                      }}
+                      className="w-full text-left px-4 py-2 text-xs text-[#B42318] hover:bg-[#FEECEB] transition-colors cursor-pointer"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <a
+                href="/login"
+                onClick={(e) => handleLink('/login', e)}
+                className="hidden sm:inline-flex items-center justify-center bg-[#203F2D] hover:bg-[#294B36] text-white text-xs sm:text-sm font-medium px-5 py-2 rounded-full transition-all duration-200 shadow-sm cursor-pointer"
+              >
+                Login
+              </a>
+            )}
 
             {/* Mobile Hamburger Toggle */}
             <button
@@ -202,7 +257,10 @@ export default function Navbar({ cartCount = 0 }) {
           <div className="md:hidden py-4 border-t border-[#E8EAE6] space-y-2 animate-fadeIn bg-white">
             <a
               href="/"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                handleLink('/', e);
+              }}
               className={`block px-3 py-2 rounded-lg text-base font-medium ${
                 currentPath === '/' ? 'bg-[#EAF0EA] text-[#203F2D] font-semibold' : 'text-[#20251F] hover:bg-[#EAF0EA]/50'
               }`}
@@ -211,42 +269,70 @@ export default function Navbar({ cartCount = 0 }) {
             </a>
             <a
               href="/menu"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                handleLink('/menu', e);
+              }}
               className={`block px-3 py-2 rounded-lg text-base font-medium ${
                 currentPath === '/menu' ? 'bg-[#EAF0EA] text-[#203F2D] font-semibold' : 'text-[#20251F] hover:bg-[#EAF0EA]/50'
               }`}
             >
-              Menu
+              Chai Menu
             </a>
             <a
               href="/about"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                handleLink('/about', e);
+              }}
               className={`block px-3 py-2 rounded-lg text-base font-medium ${
                 currentPath === '/about' ? 'bg-[#EAF0EA] text-[#203F2D] font-semibold' : 'text-[#20251F] hover:bg-[#EAF0EA]/50'
               }`}
             >
-              About
+              Discover
             </a>
             <a
               href="/orders"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                handleLink('/orders', e);
+              }}
               className={`block px-3 py-2 rounded-lg text-base font-medium ${
                 currentPath === '/orders' ? 'bg-[#EAF0EA] text-[#203F2D] font-semibold' : 'text-[#20251F] hover:bg-[#EAF0EA]/50'
               }`}
             >
-              Orders
+              My Orders
             </a>
             <div className="pt-2 border-t border-[#E8EAE6] flex items-center justify-between px-3">
-              <a
-                href="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#203F2D] hover:underline"
-              >
-                Sign In / Account
-              </a>
+              {isAuthenticated ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    logout();
+                  }}
+                  className="text-sm font-medium text-[#B42318]"
+                >
+                  Sign Out ({user?.name})
+                </button>
+              ) : (
+                <a
+                  href="/login"
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    handleLink('/login', e);
+                  }}
+                  className="text-sm font-medium text-[#203F2D] hover:underline"
+                >
+                  Sign In / Create Account
+                </a>
+              )}
               <a
                 href="/cart"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleLink('/cart', e);
+                }}
                 className="text-sm font-medium text-[#203F2D] hover:underline flex items-center gap-1"
               >
                 Cart ({cartCount})
