@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 const Category = require("../models/category");
 const Product = require("../models/product");
 
-/**
- * Helper: Generate URL-friendly slug from name.
- */
 const generateSlug = (name) => {
   return name
     .toLowerCase()
@@ -14,11 +11,6 @@ const generateSlug = (name) => {
     .replace(/^-+|-+$/g, "");
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 1. CREATE CATEGORY (Admin Only)
- * -----------------------------------------------------------------------------
- */
 const createCategory = async (req, res) => {
   try {
     if (!req.user || req.user.role !== "admin") {
@@ -40,7 +32,6 @@ const createCategory = async (req, res) => {
     const trimmedName = name.trim();
     const finalSlug = slug ? slug.trim().toLowerCase() : generateSlug(trimmedName);
 
-    // Check if name or slug already exists
     const existingCategory = await Category.findOne({
       $or: [{ name: trimmedName }, { slug: finalSlug }],
     });
@@ -75,17 +66,11 @@ const createCategory = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 2. GET ALL CATEGORIES (Public / Frontend)
- * -----------------------------------------------------------------------------
- */
 const getAllCategories = async (req, res) => {
   try {
     const { all } = req.query;
     const filter = {};
 
-    // Customers only see active categories unless admin passes all=true
     if (all !== "true") {
       filter.isActive = true;
     }
@@ -109,11 +94,6 @@ const getAllCategories = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 3. GET SINGLE CATEGORY BY ID (Public)
- * -----------------------------------------------------------------------------
- */
 const getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -147,11 +127,6 @@ const getCategoryById = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 4. GET CATEGORY BY SLUG (Public / SEO)
- * -----------------------------------------------------------------------------
- */
 const getCategoryBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
@@ -187,11 +162,6 @@ const getCategoryBySlug = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 5. UPDATE CATEGORY (Admin Only)
- * -----------------------------------------------------------------------------
- */
 const updateCategory = async (req, res) => {
   try {
     if (!req.user || req.user.role !== "admin") {
@@ -257,11 +227,6 @@ const updateCategory = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 6. DELETE CATEGORY (Admin Only)
- * -----------------------------------------------------------------------------
- */
 const deleteCategory = async (req, res) => {
   try {
     if (!req.user || req.user.role !== "admin") {
@@ -280,7 +245,6 @@ const deleteCategory = async (req, res) => {
       });
     }
 
-    // Check if any products currently use this category
     const associatedProductsCount = await Product.countDocuments({ category: id });
     if (associatedProductsCount > 0) {
       return res.status(400).json({

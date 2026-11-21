@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 const Cart = require("../models/cart");
 const Product = require("../models/product");
 
-/**
- * Helper: Calculate pricing and totals for a cart with populated products.
- */
 const formatCartResponse = (cart) => {
   let subtotal = 0;
   let totalItemsCount = 0;
@@ -45,12 +42,6 @@ const formatCartResponse = (cart) => {
   };
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 1. GET CART (Customer)
- * Retrieves or initializes the user's active shopping cart.
- * -----------------------------------------------------------------------------
- */
 const getCart = async (req, res) => {
   try {
     const userId = req.user?.id || req.user?._id;
@@ -88,12 +79,6 @@ const getCart = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 2. ADD TO CART (Customer)
- * Adds an item or increments quantity if an identical customization already exists.
- * -----------------------------------------------------------------------------
- */
 const addToCart = async (req, res) => {
   try {
     const userId = req.user?.id || req.user?._id;
@@ -190,11 +175,6 @@ const addToCart = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 3. UPDATE CART ITEM QUANTITY / CUSTOMIZATION
- * -----------------------------------------------------------------------------
- */
 const updateCartItem = async (req, res) => {
   try {
     const userId = req.user?.id || req.user?._id;
@@ -265,11 +245,7 @@ const updateCartItem = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 4. REMOVE ITEM FROM CART
- * -----------------------------------------------------------------------------
- */
+
 const removeFromCart = async (req, res) => {
   try {
     const userId = req.user?.id || req.user?._id;
@@ -312,11 +288,6 @@ const removeFromCart = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 5. CLEAR ENTIRE CART
- * -----------------------------------------------------------------------------
- */
 const clearCart = async (req, res) => {
   try {
     const userId = req.user?.id || req.user?._id;

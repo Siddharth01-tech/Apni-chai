@@ -1,7 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
-// Remove sensitive fields from user response.
 const sanitizeUser = (user) => {
     const userObject = user.toObject();
 
@@ -11,18 +10,6 @@ const sanitizeUser = (user) => {
     return userObject;
 };
 
-/**
- * -----------------------------------------------------------------------------
- * ADDRESS CONTROLLERS
- * According to addressSchema in user.js:
- * label, fullName, phone, houseNumber, street, area, city, state, pinCode, isDefault
- * -----------------------------------------------------------------------------
- */
-
-/**
- * Add a new delivery address for the authenticated user.
- * Function name matches the prompt's `completeaddress`.
- */
 const addaddress = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -47,8 +34,6 @@ const addaddress = async (req, res) => {
             isDefault,
         } = req.body;
 
-
-        // Validate required fields as per addressSchema
         if (
             !fullName ||
             !phone ||
@@ -74,8 +59,6 @@ const addaddress = async (req, res) => {
             });
         }
 
-        // Determine default status:
-        // If explicitly requested as default, or if this is user's first address
         const shouldBeDefault =
             Boolean(isDefault) || user.addresses.length === 0;
 
@@ -119,9 +102,6 @@ const addaddress = async (req, res) => {
     }
 };
 
-/**
- * Get all saved delivery addresses for the authenticated user.
- */
 const getAddresses = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -157,9 +137,6 @@ const getAddresses = async (req, res) => {
     }
 };
 
-/**
- * Get a single delivery address by its ID.
- */
 const getAddressById = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -204,9 +181,6 @@ const getAddressById = async (req, res) => {
     }
 };
 
-/**
- * Update an existing delivery address.
- */
 const updateAddress = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -250,8 +224,6 @@ const updateAddress = async (req, res) => {
             isDefault,
         } = req.body;
 
-
-        // Update only provided fields
         if (label !== undefined) address.label = label.trim();
         if (fullName !== undefined) address.fullName = fullName.trim();
         if (phone !== undefined) address.phone = phone.trim();
@@ -262,7 +234,6 @@ const updateAddress = async (req, res) => {
         if (state !== undefined) address.state = state.trim();
         if (pinCode !== undefined) address.pinCode = pinCode.toString().trim();
 
-        // If setting this address as default, unset other defaults
         if (isDefault === true) {
             user.addresses.forEach((addr) => {
                 if (addr._id.toString() !== addressId) {
@@ -292,9 +263,6 @@ const updateAddress = async (req, res) => {
     }
 };
 
-/**
- * Delete a delivery address by its ID.
- */
 const deleteAddress = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -327,10 +295,8 @@ const deleteAddress = async (req, res) => {
 
         const wasDefault = address.isDefault;
 
-        // Remove the address
         user.addresses.pull({ _id: addressId });
 
-        // If the removed address was default, promote the first remaining address to default
         if (wasDefault && user.addresses.length > 0) {
             user.addresses[0].isDefault = true;
         }
@@ -352,9 +318,6 @@ const deleteAddress = async (req, res) => {
     }
 };
 
-/**
- * Set an address as the default delivery address.
- */
 const setDefaultAddress = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -406,15 +369,6 @@ const setDefaultAddress = async (req, res) => {
     }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * USER PROFILE & PREFERENCE CONTROLLERS
- * -----------------------------------------------------------------------------
- */
-
-/**
- * Get full profile of the authenticated user.
- */
 const getUserProfile = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -449,9 +403,6 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-/**
- * Update basic user details (name, phone).
- */
 const updateUserProfile = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -513,10 +464,6 @@ const updateUserProfile = async (req, res) => {
     }
 };
 
-/**
- * Update Chaiva chai ordering preferences:
- * favoriteChaiTypes, preferredSize, sugarPreference, milkPreference, spicePreference
- */
 const updateUserPreferences = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -545,7 +492,6 @@ const updateUserPreferences = async (req, res) => {
             });
         }
 
-        // Validate enum constraints matching userSchema
         if (preferredSize && !["small", "medium", "large"].includes(preferredSize)) {
             return res.status(400).json({
                 success: false,
@@ -573,7 +519,6 @@ const updateUserPreferences = async (req, res) => {
             });
         }
 
-        // Initialize preferences object if missing
         if (!user.preferences) {
             user.preferences = {};
         }
@@ -613,9 +558,6 @@ const updateUserPreferences = async (req, res) => {
     }
 };
 
-/**
- * Change account password.
- */
 const changePassword = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -660,10 +602,9 @@ const changePassword = async (req, res) => {
             });
         }
 
-        // Hash and store new password
         const hashedPassword = await bcrypt.hash(newPassword, 12);
         user.password = hashedPassword;
-        user.refreshTokenHash = undefined; // Invalidate existing sessions for security
+        user.refreshTokenHash = undefined; 
 
         await user.save();
 
@@ -681,9 +622,6 @@ const changePassword = async (req, res) => {
     }
 };
 
-/**
- * Deactivate user account (soft delete).
- */
 const deactivateAccount = async (req, res) => {
     try {
         const userId = req.user?.id || req.user?._id;
@@ -723,7 +661,7 @@ const deactivateAccount = async (req, res) => {
 };
 
 module.exports = {
-    // Address operations
+    
     addaddress,
     completeaddress: addaddress,
     getAddresses,
@@ -732,7 +670,6 @@ module.exports = {
     deleteAddress,
     setDefaultAddress,
 
-    // Profile & Preference operations
     getUserProfile,
     updateUserProfile,
     updateUserPreferences,

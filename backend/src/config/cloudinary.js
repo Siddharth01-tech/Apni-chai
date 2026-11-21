@@ -7,12 +7,6 @@ cloudinary.config({
   secure: true,
 });
 
-/**
- * Upload a file Buffer or local path to Cloudinary.
- * @param {Buffer|string} fileInput - Memory buffer or file path
- * @param {string} folder - Target Cloudinary folder (e.g. "chaiva/products")
- * @returns {Promise<object>} Upload result with secure_url and public_id
- */
 const uploadToCloudinary = (fileInput, folder = "chaiva/uploads") => {
   return new Promise((resolve, reject) => {
     if (Buffer.isBuffer(fileInput)) {
@@ -43,11 +37,6 @@ const uploadToCloudinary = (fileInput, folder = "chaiva/uploads") => {
   });
 };
 
-/**
- * Delete a media asset from Cloudinary using its public_id.
- * @param {string} publicId
- * @returns {Promise<object>} Result
- */
 const deleteFromCloudinary = async (publicId) => {
   return await cloudinary.uploader.destroy(publicId);
 };

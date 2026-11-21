@@ -26,12 +26,6 @@ const generateAuthTokens = (user) => {
   return { accessToken };
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 1. SEND OTP
- * Generates and delivers a 6-digit OTP for login, registration, or password reset.
- * -----------------------------------------------------------------------------
- */
 const sendOtp = async (req, res) => {
   try {
     const { email, phone, purpose = "login" } = req.body;
@@ -81,12 +75,6 @@ const sendOtp = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 2. VERIFY OTP
- * Validates OTP code, marks as verified, and signs in if purpose is 'login'.
- * -----------------------------------------------------------------------------
- */
 const verifyOtp = async (req, res) => {
   try {
     const { email, phone, otp, purpose = "login" } = req.body;
@@ -175,11 +163,6 @@ const verifyOtp = async (req, res) => {
   }
 };
 
-/**
- * -----------------------------------------------------------------------------
- * 3. RESEND OTP
- * -----------------------------------------------------------------------------
- */
 const resendOtp = async (req, res) => {
   return await sendOtp(req, res);
 };

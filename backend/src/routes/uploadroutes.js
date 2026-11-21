@@ -5,7 +5,6 @@ const { protect } = require("../middleware/authmiddleware");
 
 const router = express.Router();
 
-// Single image upload to Cloudinary
 router.post("/single", protect, upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
@@ -36,7 +35,6 @@ router.post("/single", protect, upload.single("image"), async (req, res) => {
   }
 });
 
-// Multiple image upload to Cloudinary (up to 5 images, e.g. for reviews)
 router.post("/multiple", protect, upload.array("images", 5), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {

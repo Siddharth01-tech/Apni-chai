@@ -78,15 +78,10 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Prevent multiple reviews on the same product by the same user.
 reviewSchema.index({ product: 1, user: 1 }, { unique: true });
 reviewSchema.index({ product: 1, status: 1, createdAt: -1 });
 reviewSchema.index({ user: 1, createdAt: -1 });
 
-/**
- * Calculates average rating and total review count for a product
- * and updates the corresponding Product document.
- */
 reviewSchema.statics.calculateAverageRating = async function (productId) {
   if (!productId) return;
 
@@ -126,12 +121,10 @@ reviewSchema.statics.calculateAverageRating = async function (productId) {
   }
 };
 
-// Update product rating after review is saved.
 reviewSchema.post("save", function () {
   this.constructor.calculateAverageRating(this.product);
 });
 
-// Update product rating after review is updated or deleted via findOneAnd*.
 reviewSchema.post(/^findOneAnd/, async function (doc) {
   if (doc) {
     await doc.constructor.calculateAverageRating(doc.product);
