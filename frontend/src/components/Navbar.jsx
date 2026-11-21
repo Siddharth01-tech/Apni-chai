@@ -8,14 +8,14 @@ import { useAuth } from '../context/useAuth';
  * - Right utility actions: Search, Login pill button / Profile, Shopping Cart (badge count)
  * - Mobile responsive drawer with toggle
  */
-export default function Navbar({ cartCount = 0, onNavigate }) {
+export default function Navbar({ cartCount = 0, onNavigate, currentPath: propCurrentPath }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const { user, isAuthenticated, logout } = useAuth();
 
   // Active route helper
-  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+  const currentPath = propCurrentPath || (typeof window !== 'undefined' ? window.location.pathname : '/');
 
   const handleLink = (path, e) => {
     if (e) e.preventDefault();
@@ -84,7 +84,7 @@ export default function Navbar({ cartCount = 0, onNavigate }) {
               href="/menu"
               onClick={(e) => handleLink('/menu', e)}
               className={`relative py-1 text-sm font-medium transition-colors ${
-                currentPath === '/menu'
+                currentPath === '/menu' || currentPath.startsWith('/menu/')
                   ? 'text-[#20251F] font-semibold after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-[#20251F] after:rounded-full'
                   : 'text-[#20251F]/80 hover:text-[#203F2D]'
               }`}
@@ -274,7 +274,7 @@ export default function Navbar({ cartCount = 0, onNavigate }) {
                 handleLink('/menu', e);
               }}
               className={`block px-3 py-2 rounded-lg text-base font-medium ${
-                currentPath === '/menu' ? 'bg-[#EAF0EA] text-[#203F2D] font-semibold' : 'text-[#20251F] hover:bg-[#EAF0EA]/50'
+                currentPath === '/menu' || currentPath.startsWith('/menu/') ? 'bg-[#EAF0EA] text-[#203F2D] font-semibold' : 'text-[#20251F] hover:bg-[#EAF0EA]/50'
               }`}
             >
               Chai Menu

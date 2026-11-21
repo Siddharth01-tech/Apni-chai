@@ -12,12 +12,23 @@ import ourStoryImg from '../assets/our-story.jpg';
  * - Our Story (two-column: authentic chai image + brand story)
  * - Why Chaiva? (two-column: value proposition + 3 feature icons)
  */
-export default function Home({ onAddToCart }) {
+export default function Home({ onAddToCart, onNavigate }) {
   const handleOrderClick = (product) => {
-    if (onAddToCart) {
+    if (onNavigate) {
+      onNavigate(`/menu/${product.slug || product.id}`);
+    } else if (onAddToCart) {
       onAddToCart(product);
     } else {
-      window.location.href = '/menu';
+      window.location.href = `/menu/${product.slug || product.id}`;
+    }
+  };
+
+  const handleLink = (path, e) => {
+    if (e) e.preventDefault();
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.href = path;
     }
   };
 
@@ -52,6 +63,7 @@ export default function Home({ onAddToCart }) {
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <a
                   href="/menu"
+                  onClick={(e) => handleLink('/menu', e)}
                   className="inline-flex items-center justify-center gap-2 bg-[#203F2D] hover:bg-[#294B36] active:scale-95 text-white text-sm sm:text-base font-medium px-7 py-3.5 rounded-full transition-all duration-200 shadow-sm hover:shadow group"
                 >
                   <span>Order Now</span>
@@ -73,6 +85,7 @@ export default function Home({ onAddToCart }) {
 
                 <a
                   href="/menu"
+                  onClick={(e) => handleLink('/menu', e)}
                   className="inline-flex items-center justify-center bg-transparent hover:bg-[#EAF0EA]/60 active:scale-95 text-[#203F2D] border border-[#203F2D] text-sm sm:text-base font-medium px-7 py-3.5 rounded-full transition-all duration-200"
                 >
                   Explore Menu
@@ -214,6 +227,7 @@ export default function Home({ onAddToCart }) {
               <div className="mt-7">
                 <a
                   href="/menu"
+                  onClick={(e) => handleLink('/menu', e)}
                   className="inline-flex items-center justify-center bg-[#203F2D] hover:bg-[#294B36] active:scale-95 text-white text-sm sm:text-base font-medium px-7 py-3 rounded-full transition-all duration-200 shadow-sm hover:shadow"
                 >
                   Order Now
