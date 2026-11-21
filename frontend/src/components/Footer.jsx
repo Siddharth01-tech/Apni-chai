@@ -9,7 +9,16 @@ import React from 'react';
  * - Divider line
  * - Bottom: Copyright 2026 & Legal links
  */
-export default function Footer() {
+export default function Footer({ onNavigate }) {
+  const handleLink = (path, e) => {
+    if (e) e.preventDefault();
+    if (onNavigate) {
+      onNavigate(path);
+    } else {
+      window.location.href = path;
+    }
+  };
+
   return (
     <footer className="bg-[#203F2D] text-white pt-14 pb-10 border-t border-[#203F2D]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,7 +28,12 @@ export default function Footer() {
           
           {/* LEFT: Brand Logo & Tagline */}
           <div className="flex flex-col items-center md:items-start">
-            <a href="/" className="flex items-center gap-2.5 group" aria-label="Chaiva Home">
+            <a
+              href="/"
+              onClick={(e) => handleLink('/', e)}
+              className="flex items-center gap-2.5 group"
+              aria-label="Chaiva Home"
+            >
               {/* White Minimal Chai Cup */}
               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">
                 <svg
@@ -52,24 +66,28 @@ export default function Footer() {
           <nav className="flex flex-wrap justify-center items-center gap-6 sm:gap-8" aria-label="Footer navigation">
             <a
               href="/"
+              onClick={(e) => handleLink('/', e)}
               className="text-sm text-white/90 hover:text-white transition-colors duration-200"
             >
               Home
             </a>
             <a
               href="/menu"
+              onClick={(e) => handleLink('/menu', e)}
               className="text-sm text-white/90 hover:text-white transition-colors duration-200"
             >
               Menu
             </a>
             <a
               href="/about"
+              onClick={(e) => handleLink('/about', e)}
               className="text-sm text-white/90 hover:text-white transition-colors duration-200"
             >
               About
             </a>
             <a
               href="/orders"
+              onClick={(e) => handleLink('/orders', e)}
               className="text-sm text-white/90 hover:text-white transition-colors duration-200"
             >
               Orders

@@ -4,11 +4,14 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Auth from './pages/Auth';
+import Menu from './pages/Menu';
+import ProductDetail from './pages/ProductDetail';
 
 /**
  * Chaiva Frontend Application:
  * - AuthProvider state management for user login/signup
- * - Routing between Home and the dedicated Sign In / Sign Up page
+ * - Routing between Home, Chai Menu (/menu), and Product Details (/menu/:slug)
+ * - Dedicated Sign In / Sign Up page (/login, /signup) matching reference design
  * - Dynamic URL state synchronization (popstate support)
  * - Cart count and toast feedback
  */
@@ -36,15 +39,18 @@ function MainApp() {
     }
   };
 
-  const handleAddToCart = (product) => {
-    setCartCount((prev) => prev + 1);
-    setToastMessage(`Added ${product.name} to your order!`);
+  const handleAddToCart = (productOrItem) => {
+    const qty = productOrItem?.quantity || 1;
+    setCartCount((prev) => prev + qty);
+    const itemName = productOrItem?.name || productOrItem?.product?.name || 'Chai';
+    const sizePart = productOrItem?.sizeLabel ? ` (${productOrItem.sizeLabel})` : '';
+    setToastMessage(`Added ${itemName}${sizePart} to your order!`);
     setTimeout(() => {
       setToastMessage(null);
     }, 2800);
   };
 
-  // Auth pages route matching
+  // Auth pages route matching (Dedicated Sign In / Sign Up full view matching reference)
   if (currentPath === '/login' || currentPath === '/signin') {
     return <Auth initialMode="login" onNavigate={navigate} />;
   }
@@ -53,9 +59,41 @@ function MainApp() {
     return <Auth initialMode="register" onNavigate={navigate} />;
   }
 
-  // Default: Homepage
+  // Determine main body view based on route
+  const renderCurrentView = () => {
+    // Product Detail: /menu/:slug
+    if (currentPath.startsWith('/menu/') && currentPath.length > 6) {
+      const slug = currentPath.replace(/^\/menu\//, '').split('?')[0].split('#')[0];
+      return (
+        <ProductDetail
+          slug={slug}
+          onNavigate={navigate}
+          onAddToCart={handleAddToCart}
+        />
+      );
+    }
+
+    // Chai Menu Page: /menu
+    if (currentPath === '/menu' || currentPath.startsWith('/menu')) {
+      return (
+        <Menu
+          onNavigate={navigate}
+          onAddToCart={handleAddToCart}
+        />
+      );
+    }
+
+    // Default: Home Page
+    return (
+      <Home
+        onNavigate={navigate}
+        onAddToCart={handleAddToCart}
+      />
+    );
+  };
+
   return (
-    <div className="min-h-screen bg-white text-[#20251F] flex flex-col justify-between selection:bg-[#EAF0EA] selection:text-[#203F2D]">
+    <div className="min-h-screen bg-[#FAF8F5] text-[#20251F] flex flex-col justify-between selection:bg-[#EAF0EA] selection:text-[#203F2D]">
       {/* Toast Notification */}
       {toastMessage && (
         <aside
@@ -70,16 +108,16 @@ function MainApp() {
         </aside>
       )}
 
-      {/* SECTION 1: Navigation Bar */}
-      <Navbar cartCount={cartCount} onNavigate={navigate} />
+      {/* Navigation Bar */}
+      <Navbar cartCount={cartCount} onNavigate={navigate} currentPath={currentPath} />
 
-      {/* SECTIONS 2 to 5: Homepage Content */}
+      {/* Main Page Content */}
       <main className="flex-grow">
-        <Home onAddToCart={handleAddToCart} />
+        {renderCurrentView()}
       </main>
 
-      {/* SECTION 6: Dark Forest Green Footer */}
-      <Footer />
+      {/* Dark Forest Green Footer */}
+      <Footer onNavigate={navigate} />
     </div>
   );
 }

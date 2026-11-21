@@ -12,10 +12,9 @@ const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_UR
  * - Responsive 3-column product cards grid with badge tags & "View Details"
  * - Bottom artisanal promise banner: "Every cup is poured fresh"
  */
-export default function Menu({ onNavigate, onAddToCart }) {
+export default function Menu({ onNavigate, onAddToCart: _onAddToCart }) {
   // Products state (starts with rich curated products, syncs with backend if reachable)
   const [products, setProducts] = useState(allChaiProducts);
-  const [loading, setLoading] = useState(false);
 
   // Filter States
   const [searchQuery, setSearchQuery] = useState('');

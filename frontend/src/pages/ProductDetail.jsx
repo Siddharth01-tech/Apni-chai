@@ -22,9 +22,12 @@ export default function ProductDetail({ slug, onNavigate, onAddToCart }) {
     return getProductBySlugOrId(slug);
   }, [slug]);
 
-  // Active product state (enhanced with backend data if online)
-  const [product, setProduct] = useState(baseProduct);
-  const [loading, setLoading] = useState(false);
+  const [backendMeta, setBackendMeta] = useState(null);
+
+  // Merge base product with backend metadata
+  const product = useMemo(() => {
+    return backendMeta ? { ...baseProduct, ...backendMeta } : baseProduct;
+  }, [baseProduct, backendMeta]);
 
   // Customization selection state
   const [selectedSize, setSelectedSize] = useState('small'); // 'small', 'medium', 'large'
@@ -33,16 +36,6 @@ export default function ProductDetail({ slug, onNavigate, onAddToCart }) {
   const [selectedSpice, setSelectedSpice] = useState('Medium');
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
-
-  // Sync if slug changes
-  useEffect(() => {
-    setProduct(getProductBySlugOrId(slug));
-    setSelectedSize('small');
-    setSelectedSugar('Regular Sugar');
-    setSelectedMilk('Dairy Milk');
-    setSelectedSpice('Medium');
-    setQuantity(1);
-  }, [slug]);
 
   // Fetch live backend product data if available
   useEffect(() => {
@@ -53,11 +46,10 @@ export default function ProductDetail({ slug, onNavigate, onAddToCart }) {
         if (!res.ok) return;
         const data = await res.json();
         if (data.success && data.product && isMounted) {
-          setProduct((prev) => ({
-            ...prev,
+          setBackendMeta({
             backendId: data.product._id,
             isAvailable: data.product.isAvailable ?? true,
-          }));
+          });
         }
       } catch {
         // Continue with local rich product representation
