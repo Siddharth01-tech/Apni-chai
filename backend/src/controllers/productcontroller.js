@@ -13,7 +13,7 @@ const generateSlug = (name) => {
 
 const addproduct = async (req, res) => {
   try {
-    
+    // Admin authorization check
     if (!req.user || req.user.role !== "admin") {
       return res.status(403).json({
         success: false,
@@ -35,9 +35,11 @@ const addproduct = async (req, res) => {
       isAvailable,
     } = req.body;
 
+    // Resolve case differences & aliases
     const resolvedChaiType = (chaiType || chaitype || "").toLowerCase().trim();
     const resolvedImage = image || ImageofProduct || "";
 
+    // 1. Required field validations
     if (!name || !description || !category || !resolvedChaiType) {
       return res.status(400).json({
         success: false,
@@ -45,6 +47,7 @@ const addproduct = async (req, res) => {
       });
     }
 
+    // 2. Validate category ID
     if (!mongoose.Types.ObjectId.isValid(category)) {
       return res.status(400).json({
         success: false,
@@ -60,6 +63,7 @@ const addproduct = async (req, res) => {
       });
     }
 
+    // 3. Validate chaiType enum matching Product model
     const allowedChaiTypes = [
       "masala",
       "ginger",
@@ -76,6 +80,7 @@ const addproduct = async (req, res) => {
       });
     }
 
+    // 4. Validate sizes
     if (!Array.isArray(sizes) || sizes.length === 0) {
       return res.status(400).json({
         success: false,
@@ -98,12 +103,14 @@ const addproduct = async (req, res) => {
       }
     }
 
+    // 5. Generate / Validate unique slug
     let finalSlug = slug ? slug.trim().toLowerCase() : generateSlug(name);
     const existingSlug = await Product.findOne({ slug: finalSlug });
     if (existingSlug) {
       finalSlug = `${finalSlug}-${Date.now().toString().slice(-4)}`;
     }
 
+    // 6. Create product document
     const newProduct = await Product.create({
       name: name.trim(),
       slug: finalSlug,
@@ -135,6 +142,7 @@ const addproduct = async (req, res) => {
   }
 };
 
+
 const getAllProducts = async (req, res) => {
   try {
     const {
@@ -153,19 +161,23 @@ const getAllProducts = async (req, res) => {
 
     const filter = {};
 
+    // Filter by availability (default true for customers unless specified)
     if (isAvailable !== undefined) {
       filter.isAvailable = isAvailable === "true";
     }
 
+    // Filter by category
     if (category && mongoose.Types.ObjectId.isValid(category)) {
       filter.category = category;
     }
 
+    // Filter by chaiType
     const selectedChaiType = chaiType || chaitype;
     if (selectedChaiType) {
       filter.chaiType = selectedChaiType.toLowerCase().trim();
     }
 
+    // Search by name or description
     const searchQuery = search || q;
     if (searchQuery) {
       filter.$or = [
@@ -174,18 +186,21 @@ const getAllProducts = async (req, res) => {
       ];
     }
 
+    // Price range filter on sizes
     if (minPrice || maxPrice) {
       filter["sizes.price"] = {};
       if (minPrice) filter["sizes.price"].$gte = Number(minPrice);
       if (maxPrice) filter["sizes.price"].$lte = Number(maxPrice);
     }
 
-    let sortOptions = { createdAt: -1 }; 
+    // Sorting options
+    let sortOptions = { createdAt: -1 }; // newest first
     if (sort === "price_asc") sortOptions = { "sizes.0.price": 1 };
     if (sort === "price_desc") sortOptions = { "sizes.0.price": -1 };
     if (sort === "name_asc") sortOptions = { name: 1 };
     if (sort === "name_desc") sortOptions = { name: -1 };
 
+    // Pagination
     const pageNumber = Math.max(1, parseInt(page, 10) || 1);
     const pageSize = Math.max(1, parseInt(limit, 10) || 20);
     const skip = (pageNumber - 1) * pageSize;
@@ -289,7 +304,7 @@ const getProductBySlug = async (req, res) => {
 
 const getSignatureChais = async (req, res) => {
   try {
-    
+    // Look for popular signature chai types or available items
     const signatureTypes = ["masala", "ginger", "elaichi", "kulhad"];
 
     const products = await Product.find({
@@ -313,6 +328,7 @@ const getSignatureChais = async (req, res) => {
     });
   }
 };
+
 
 const updateProduct = async (req, res) => {
   try {
@@ -480,6 +496,11 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+/**
+ * -----------------------------------------------------------------------------
+ * 8. TOGGLE PRODUCT AVAILABILITY (Admin Quick Action)
+ * -----------------------------------------------------------------------------
+ */
 const toggleProductAvailability = async (req, res) => {
   try {
     if (!req.user || req.user.role !== "admin") {
@@ -528,16 +549,15 @@ const toggleProductAvailability = async (req, res) => {
 
 module.exports = {
   addproduct,
-  createProduct: addproduct, 
+  createProduct: addproduct, // Semantic alias
   getAllProducts,
-  getProducts: getAllProducts, 
+  getProducts: getAllProducts, // Semantic alias
   getProductById,
-  getProduct: getProductById, 
+  getProduct: getProductById, // Semantic alias
   getProductBySlug,
   getSignatureChais,
   updateProduct,
   deleteProduct,
-  deleteproduct: deleteProduct, 
+  deleteproduct: deleteProduct, // Semantic alias
   toggleProductAvailability,
 };
-
