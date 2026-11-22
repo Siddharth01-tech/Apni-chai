@@ -1,0 +1,14 @@
+const crypto = require("crypto");
+
+const generateOtp = (length = 6) => {
+  if (length === 6) {
+    return crypto.randomInt(100000, 999999).toString();
+  }
+  const min = Math.pow(10, length - 1);
+  const max = Math.pow(10, length) - 1;
+  return crypto.randomInt(min, max).toString();
+};
+
+module.exports = {
+  generateOtp,
+};
