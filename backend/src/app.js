@@ -44,7 +44,7 @@ app.use(cookieParser());
 app.get("/api/v1/health", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "Chaiva API is running.",
+    message: "Apni Chai API is running.",
   });
 });
 

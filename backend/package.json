@@ -1,8 +1,8 @@
 {
-  "name": "backend",
+  "name": "apni-chai-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Apni Chai - Chai Delivery Platform Backend API",
+  "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js"

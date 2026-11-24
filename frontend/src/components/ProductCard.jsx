@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Reusable ProductCard component for Chaiva:
+ * Reusable ProductCard component for Apni Chai:
  * - High quality product photograph with rounded corners
  * - Product title & short description
  * - Price in INR (e.g. ₹40)

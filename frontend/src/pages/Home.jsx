@@ -6,11 +6,11 @@ import heroChaiImg from '../assets/hero-chai.jpg';
 import ourStoryImg from '../assets/our-story.jpg';
 
 /**
- * Chaiva Homepage:
+ * Apni Chai Homepage:
  * - Hero Section (two-column: editorial typography + premium ceramic chai photograph)
  * - Signature Chai (three product cards in 1 row on desktop)
  * - Our Story (two-column: authentic chai image + brand story)
- * - Why Chaiva? (two-column: value proposition + 3 feature icons)
+ * - Why Apni Chai? (two-column: value proposition + 3 feature icons)
  */
 export default function Home({ onAddToCart, onNavigate }) {
   const handleOrderClick = (product) => {
@@ -45,7 +45,7 @@ export default function Home({ onAddToCart, onNavigate }) {
             <div className="lg:col-span-7 flex flex-col justify-center">
               {/* Eyebrow */}
               <p className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase text-[#203F2D] mb-4">
-                FRESHLY BREWED. JUST FOR YOU.
+                HAR CUP MEIN APNAPAN.
               </p>
 
               {/* Main Heading */}
@@ -164,7 +164,7 @@ export default function Home({ onAddToCart, onNavigate }) {
               <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_12px_35px_rgba(32,63,45,0.07)] aspect-[4/3] sm:aspect-[16/11] bg-[#EAF0EA]">
                 <img
                   src={ourStoryImg}
-                  alt="Chaiva handcrafted Indian tea experience"
+                  alt="Apni Chai handcrafted Indian tea experience"
                   className="w-full h-full object-cover object-center hover:scale-102 transition-transform duration-700"
                   loading="lazy"
                 />
@@ -176,7 +176,7 @@ export default function Home({ onAddToCart, onNavigate }) {
               <SectionHeading
                 label="OUR STORY"
                 title="A Little Chai. A Lot of Comfort."
-                description="Chaiva brings the warmth of freshly brewed chai to your home. Made with love, for every chai lover."
+                description="Apni Chai brings the warmth of freshly brewed chai to your home. Made with love, for every chai lover."
                 centered={false}
               />
 
@@ -209,16 +209,16 @@ export default function Home({ onAddToCart, onNavigate }) {
       </section>
 
       {/* =========================================================================
-          SECTION 5: WHY CHAIVA?
+          SECTION 5: WHY APNI CHAI?
           ========================================================================= */}
       <section className="py-14 sm:py-18 lg:py-20 border-t border-[#E8EAE6]/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             
-            {/* LEFT: Why Chaiva Pitch */}
+            {/* LEFT: Why Apni Chai Pitch */}
             <div className="lg:col-span-5 flex flex-col justify-center">
               <SectionHeading
-                label="WHY CHAIVA?"
+                label="WHY APNI CHAI?"
                 title="Your Chai, At Your Doorstep."
                 description="Freshly brewed, customized and delivered with care."
                 centered={false}

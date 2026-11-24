@@ -7,7 +7,7 @@ cloudinary.config({
   secure: true,
 });
 
-const uploadToCloudinary = (fileInput, folder = "chaiva/uploads") => {
+const uploadToCloudinary = (fileInput, folder = "apni-chai/uploads") => {
   return new Promise((resolve, reject) => {
     if (Buffer.isBuffer(fileInput)) {
       const uploadStream = cloudinary.uploader.upload_stream(

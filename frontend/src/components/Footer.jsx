@@ -1,9 +1,9 @@
 import React from 'react';
 
 /**
- * Footer component for Chaiva:
+ * Footer component for Apni Chai:
  * - Solid dark forest-green background: #203F2D
- * - Left: Chaiva white logo + "Good Chai. Good Mood."
+ * - Left: Apni Chai white logo + "Har Cup Mein Apnapan."
  * - Center: Home, Menu, About, Orders
  * - Right: Social icons (Instagram, Twitter/X, Facebook, YouTube)
  * - Divider line
@@ -32,7 +32,7 @@ export default function Footer({ onNavigate }) {
               href="/"
               onClick={(e) => handleLink('/', e)}
               className="flex items-center gap-2.5 group"
-              aria-label="Chaiva Home"
+              aria-label="Apni Chai Home"
             >
               {/* White Minimal Chai Cup */}
               <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white">
@@ -54,11 +54,11 @@ export default function Footer({ onNavigate }) {
                 </svg>
               </div>
               <span className="font-serif font-bold text-2xl tracking-tight text-white">
-                Chaiva
+                Apni Chai
               </span>
             </a>
             <p className="mt-2 text-xs sm:text-sm text-white/80 font-normal tracking-wide">
-              Good Chai. Good Mood.
+              Har Cup Mein Apnapan.
             </p>
           </div>
 
@@ -158,7 +158,7 @@ export default function Footer({ onNavigate }) {
 
         {/* BOTTOM: Legal & Copyright */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-white/70">
-          <p>© 2026 Chaiva. All rights reserved.</p>
+          <p>© 2026 Apni Chai. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a href="/privacy" className="hover:text-white transition-colors">
               Privacy Policy

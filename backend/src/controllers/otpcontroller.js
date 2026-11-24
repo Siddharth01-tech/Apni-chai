@@ -16,7 +16,7 @@ const generateNumericOtp = () => {
 const generateAuthTokens = (user) => {
   const accessToken = jwt.sign(
     { role: user.role },
-    process.env.JWT_ACCESS_SECRET || "chaiva_secret",
+    process.env.JWT_ACCESS_SECRET || "apni_chai_secret",
     {
       subject: user._id.toString(),
       expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN || "15m",
@@ -58,7 +58,7 @@ const sendOtp = async (req, res) => {
       expiresAt,
     });
 
-    console.log(`[Chaiva OTP] Code for ${normalizedEmail || normalizedPhone}: ${otpCode}`);
+    console.log(`[Apni Chai OTP] Code for ${normalizedEmail || normalizedPhone}: ${otpCode}`);
 
     return res.status(200).json({
       success: true,

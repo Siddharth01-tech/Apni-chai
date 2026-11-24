@@ -14,7 +14,7 @@ router.post("/single", protect, upload.single("image"), async (req, res) => {
       });
     }
 
-    const folder = req.body.folder || "chaiva/uploads";
+    const folder = req.body.folder || "apni-chai/uploads";
     const result = await uploadToCloudinary(req.file.buffer, folder);
 
     return res.status(200).json({
@@ -44,7 +44,7 @@ router.post("/multiple", protect, upload.array("images", 5), async (req, res) =>
       });
     }
 
-    const folder = req.body.folder || "chaiva/uploads";
+    const folder = req.body.folder || "apni-chai/uploads";
     const uploadPromises = req.files.map((file) =>
       uploadToCloudinary(file.buffer, folder)
     );

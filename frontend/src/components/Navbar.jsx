@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/useAuth';
 
 /**
- * Navbar component for Chaiva:
+ * Navbar component for Apni Chai:
  * - Brand logo with minimalist Indian chai cup icon
  * - Center links: Home, Menu, About, Orders (Home with active indicator)
  * - Right utility actions: Search, Login pill button / Profile, Shopping Cart (badge count)
@@ -37,7 +37,7 @@ export default function Navbar({ cartCount = 0, onNavigate, currentPath: propCur
               href="/"
               onClick={(e) => handleLink('/', e)}
               className="flex items-center gap-2.5 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#203F2D] rounded-lg"
-              aria-label="Chaiva Home"
+              aria-label="Apni Chai Home"
             >
               {/* Minimal Indian Chai Cup Icon */}
               <div className="w-9 h-9 rounded-full bg-[#EAF0EA] flex items-center justify-center text-[#203F2D] group-hover:bg-[#203F2D] group-hover:text-white transition-colors duration-200">
@@ -62,7 +62,7 @@ export default function Navbar({ cartCount = 0, onNavigate, currentPath: propCur
 
               {/* Brand Name */}
               <span className="font-serif font-bold text-2xl text-[#20251F] tracking-tight group-hover:text-[#203F2D] transition-colors">
-                Chaiva
+                Apni Chai
               </span>
             </a>
           </div>

@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(() => {
     try {
-      return localStorage.getItem('chaiva_token') || null;
+      return localStorage.getItem('apnichai_token') || null;
     } catch {
       return null;
     }
@@ -39,8 +39,8 @@ export function AuthProvider({ children }) {
           setUser(data.user);
         } else {
           // Token invalid or expired
-          localStorage.removeItem('chaiva_token');
-          localStorage.removeItem('chaiva_user');
+          localStorage.removeItem('apnichai_token');
+          localStorage.removeItem('apnichai_user');
           setToken(null);
           setUser(null);
         }
@@ -70,12 +70,12 @@ export function AuthProvider({ children }) {
       }
 
       if (data.accessToken) {
-        localStorage.setItem('chaiva_token', data.accessToken);
+        localStorage.setItem('apnichai_token', data.accessToken);
         setToken(data.accessToken);
       }
 
       if (data.user) {
-        localStorage.setItem('chaiva_user', JSON.stringify(data.user));
+        localStorage.setItem('apnichai_user', JSON.stringify(data.user));
         setUser(data.user);
       }
 
@@ -101,12 +101,12 @@ export function AuthProvider({ children }) {
       }
 
       if (data.accessToken) {
-        localStorage.setItem('chaiva_token', data.accessToken);
+        localStorage.setItem('apnichai_token', data.accessToken);
         setToken(data.accessToken);
       }
 
       if (data.user) {
-        localStorage.setItem('chaiva_user', JSON.stringify(data.user));
+        localStorage.setItem('apnichai_user', JSON.stringify(data.user));
         setUser(data.user);
       }
 
@@ -130,8 +130,8 @@ export function AuthProvider({ children }) {
     } catch (err) {
       console.warn('Logout error:', err);
     } finally {
-      localStorage.removeItem('chaiva_token');
-      localStorage.removeItem('chaiva_user');
+      localStorage.removeItem('apnichai_token');
+      localStorage.removeItem('apnichai_user');
       setToken(null);
       setUser(null);
     }

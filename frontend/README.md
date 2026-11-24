@@ -1,16 +1,27 @@
-# React + Vite
+# Apni Chai — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+> **Tagline:** Har Cup Mein Apnapan.
 
-Currently, two official plugins are available:
+The client application for **Apni Chai**, built with React 19, Tailwind CSS v4, and Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Artisanal Chai Catalog & Menu:** Interactive filtering by chai type, price, size, and spice levels.
+- **Detailed Product Experience:** Dynamic cup size selection, milk options, sweetness levels, and add-to-cart workflows.
+- **Editorial Brand Aesthetic:** Warm color palette (`#203F2D`, `#FAF8F5`, `#EAF0EA`) and serif typography.
+- **Authentication & User Management:** Clean sign-in and registration with JWT and localStorage session persistence.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Development
 
-## Expanding the Oxlint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Production Build
+
+```bash
+npm run build
+npm run preview
+```
+

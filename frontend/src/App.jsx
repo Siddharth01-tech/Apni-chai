@@ -8,7 +8,7 @@ import Menu from './pages/Menu';
 import ProductDetail from './pages/ProductDetail';
 
 /**
- * Chaiva Frontend Application:
+ * Apni Chai Frontend Application:
  * - AuthProvider state management for user login/signup
  * - Routing between Home, Chai Menu (/menu), and Product Details (/menu/:slug)
  * - Dedicated Sign In / Sign Up page (/login, /signup) matching reference design

@@ -3,7 +3,7 @@ import { useAuth } from '../context/useAuth';
 import heroChaiImg from '../assets/hero-chai.jpg';
 
 /**
- * Chaiva Sign In & Sign Up Page:
+ * Apni Chai Sign In & Sign Up Page:
  * Matched strictly to the reference design.
  * - Centered two-column card with warm photography & dark green editorial overlay
  * - Pill segmented toggle between Login and Create Account
@@ -78,7 +78,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
       setLoading(false);
 
       if (res.success) {
-        setSuccessMsg('Account created successfully! Welcome to Chaiva.');
+        setSuccessMsg('Account created successfully! Welcome to Apni Chai.');
         setTimeout(() => {
           if (onNavigate) {
             onNavigate('/');
@@ -122,7 +122,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
             className="flex items-center gap-2 group focus:outline-none cursor-pointer"
           >
             <span className="font-serif font-bold text-2xl text-[#1C3829] tracking-tight">
-              Chaiva
+              Apni Chai
             </span>
             <svg
               width="18"
@@ -245,7 +245,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                 </svg>
               </div>
               <span className="font-serif font-semibold text-lg tracking-wide text-white">
-                Chaiva
+                Apni Chai
               </span>
             </div>
 
@@ -333,8 +333,8 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
               </h1>
               <p className="text-xs sm:text-sm text-[#70756E] mt-1.5">
                 {mode === 'login'
-                  ? 'Sign in to your Chaiva account.'
-                  : 'Join Chaiva for fresh, slow-brewed chai delivered daily.'}
+                  ? 'Sign in to your Apni Chai account.'
+                  : 'Join Apni Chai for fresh, slow-brewed chai delivered daily.'}
               </p>
             </div>
 
@@ -583,13 +583,13 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
           {/* Left Brand & Italic Tagline */}
           <div className="flex flex-col items-center sm:items-start">
             <div className="flex items-center gap-1.5 font-serif font-bold text-lg text-[#1C3829]">
-              <span>Chaiva</span>
+              <span>Apni Chai</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1C3829" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
               </svg>
             </div>
             <p className="font-serif italic text-sm text-[#70756E] mt-0.5">
-              Freshly Brewed. Just for You.
+              Har Cup Mein Apnapan.
             </p>
           </div>
 
@@ -629,7 +629,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
 
         {/* Copyright */}
         <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-[#EAE3DC]/40 text-center sm:text-left text-[11px] text-[#9A9890]">
-          © 2025 Chaiva Artisanal Beverages. All rights reserved.
+          © 2026 Apni Chai. All rights reserved.
         </div>
       </footer>
 

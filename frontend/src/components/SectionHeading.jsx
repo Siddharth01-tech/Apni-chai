@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Reusable SectionHeading component adhering strictly to the Chaiva design system:
+ * Reusable SectionHeading component adhering strictly to the Apni Chai design system:
  * - Label: small uppercase tracking-widest text in dark green
  * - Heading: elegant editorial serif (Playfair Display)
  * - Optional centered ornament lines for signature sections

@@ -4,7 +4,7 @@ import { allChaiProducts } from '../data/products';
 const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 /**
- * Menu Page Component for Chaiva:
+ * Menu Page Component for Apni Chai:
  * - Layout matches "Explore Our Chai" reference design (Image 1)
  * - Artisanal Brew Selection header badge & serif title
  * - Left sidebar with interactive filters (Chai type, Price range, Size, Customization)

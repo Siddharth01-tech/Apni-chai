@@ -5,7 +5,7 @@ import { useAuth } from '../context/useAuth';
 const API_BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 /**
- * ProductDetail Page Component for Chaiva:
+ * ProductDetail Page Component for Apni Chai:
  * - Matches the exact layout and typography of Image 2 reference
  * - Breadcrumb navigation: Home / Chai Menu / [Product Name]
  * - Left column: High-res photography, spice badges, decoction strength indicator
