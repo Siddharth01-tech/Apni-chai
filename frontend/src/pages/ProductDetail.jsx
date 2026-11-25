@@ -159,7 +159,7 @@ export default function ProductDetail({ slug, onNavigate, onAddToCart }) {
   };
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen pb-16 pt-6 sm:pt-8 text-[#20251F]">
+    <div className="bg-white min-h-screen pb-16 pt-6 sm:pt-8 text-[#20251F]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ============================================================ */}

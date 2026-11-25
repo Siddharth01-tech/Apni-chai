@@ -147,46 +147,125 @@ export default function Navbar({ cartCount = 0, onNavigate, currentPath: propCur
               </span>
             </a>
 
-            {/* Auth State: Login Pill Button or User Profile Icon */}
+            {/* Auth State: Login Pill Button or User Profile Pill & Dropdown */}
             {isAuthenticated ? (
               <div className="relative">
                 <button
                   type="button"
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="flex items-center gap-2 p-1.5 rounded-full hover:bg-[#EAF0EA] transition-colors cursor-pointer"
+                  className="flex items-center gap-2 py-1.5 px-3 rounded-full hover:bg-[#EAF0EA] border border-[#E8EAE6] transition-all cursor-pointer group"
                   aria-label="Account Menu"
+                  aria-expanded={profileDropdownOpen}
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#203F2D] text-white flex items-center justify-center text-xs font-bold">
+                  <div className="w-7 h-7 rounded-full bg-[#203F2D] text-white flex items-center justify-center text-xs font-bold shadow-2xs">
                     {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
                   </div>
+                  <span className="hidden sm:inline-block text-xs font-medium text-[#20251F] max-w-[100px] truncate">
+                    {user?.name ? user.name.split(' ')[0] : 'Account'}
+                  </span>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`text-[#666B65] transition-transform duration-200 ${profileDropdownOpen ? 'rotate-180' : ''}`}
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
                 </button>
 
                 {profileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-lg border border-[#E8EAE6] py-2 z-50 animate-fadeIn">
-                    <div className="px-4 py-2 border-b border-[#E8EAE6]">
-                      <p className="text-xs font-semibold text-[#20251F] truncate">{user?.name}</p>
-                      <p className="text-[11px] text-[#666B65] truncate">{user?.email}</p>
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-[#E8EAE6] py-2 z-50 animate-fadeIn">
+                    <div className="px-4 py-2.5 border-b border-[#E8EAE6]">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-xs font-semibold text-[#20251F] truncate">{user?.name || 'Chai Lover'}</p>
+                        {user?.role === 'admin' ? (
+                          <span className="px-1.5 py-0.5 rounded text-[9px] font-bold tracking-wider uppercase bg-[#8B6532]/10 text-[#8B6532] border border-[#8B6532]/30">
+                            Admin
+                          </span>
+                        ) : (
+                          <span className="px-1.5 py-0.5 rounded text-[9px] font-medium bg-[#EAF0EA] text-[#203F2D]">
+                            Customer
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-[#666B65] truncate mt-0.5">{user?.email}</p>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setProfileDropdownOpen(false);
-                        handleLink('/orders');
-                      }}
-                      className="w-full text-left px-4 py-2 text-xs text-[#20251F] hover:bg-[#EAF0EA] transition-colors cursor-pointer"
-                    >
-                      My Orders
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setProfileDropdownOpen(false);
-                        logout();
-                      }}
-                      className="w-full text-left px-4 py-2 text-xs text-[#B42318] hover:bg-[#FEECEB] transition-colors cursor-pointer"
-                    >
-                      Sign Out
-                    </button>
+
+                    <div className="py-1">
+                      {user?.role === 'admin' && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setProfileDropdownOpen(false);
+                            handleLink('/admin');
+                          }}
+                          className="w-full text-left px-4 py-2 text-xs text-[#8B6532] font-semibold hover:bg-[#8B6532]/10 transition-colors flex items-center gap-2 cursor-pointer"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="7" height="7" />
+                            <rect x="14" y="3" width="7" height="7" />
+                            <rect x="14" y="14" width="7" height="7" />
+                            <rect x="3" y="14" width="7" height="7" />
+                          </svg>
+                          <span>Admin Dashboard</span>
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setProfileDropdownOpen(false);
+                          handleLink('/orders');
+                        }}
+                        className="w-full text-left px-4 py-2 text-xs text-[#20251F] hover:bg-[#EAF0EA] transition-colors flex items-center gap-2 cursor-pointer"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                          <polyline points="14 2 14 8 20 8" />
+                          <line x1="16" y1="13" x2="8" y2="13" />
+                          <line x1="16" y1="17" x2="8" y2="17" />
+                        </svg>
+                        <span>My Orders</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setProfileDropdownOpen(false);
+                          handleLink('/profile');
+                        }}
+                        className="w-full text-left px-4 py-2 text-xs text-[#20251F] hover:bg-[#EAF0EA] transition-colors flex items-center gap-2 cursor-pointer"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                          <circle cx="12" cy="7" r="4" />
+                        </svg>
+                        <span>Profile & Addresses</span>
+                      </button>
+                    </div>
+
+                    <div className="border-t border-[#E8EAE6] pt-1 mt-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setProfileDropdownOpen(false);
+                          logout();
+                        }}
+                        className="w-full text-left px-4 py-2 text-xs text-[#B42318] hover:bg-[#FEECEB] transition-colors flex items-center gap-2 cursor-pointer"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                          <polyline points="16 17 21 12 16 7" />
+                          <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg>
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
@@ -303,18 +382,58 @@ export default function Navbar({ cartCount = 0, onNavigate, currentPath: propCur
             >
               My Orders
             </a>
-            <div className="pt-2 border-t border-[#E8EAE6] flex items-center justify-between px-3">
+            <div className="pt-2 border-t border-[#E8EAE6] space-y-2 px-3">
               {isAuthenticated ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    logout();
-                  }}
-                  className="text-sm font-medium text-[#B42318]"
-                >
-                  Sign Out ({user?.name})
-                </button>
+                <>
+                  <div className="flex items-center gap-2.5 py-1">
+                    <div className="w-8 h-8 rounded-full bg-[#203F2D] text-white flex items-center justify-center text-xs font-bold">
+                      {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-semibold text-[#20251F] truncate">{user?.name}</p>
+                      <p className="text-[10px] text-[#666B65] truncate">{user?.email}</p>
+                    </div>
+                    {user?.role === 'admin' && (
+                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#8B6532]/10 text-[#8B6532]">
+                        Admin
+                      </span>
+                    )}
+                  </div>
+                  {user?.role === 'admin' && (
+                    <a
+                      href="/admin"
+                      onClick={(e) => {
+                        setMobileMenuOpen(false);
+                        handleLink('/admin', e);
+                      }}
+                      className="block text-xs font-semibold text-[#8B6532] hover:underline"
+                    >
+                      Admin Dashboard
+                    </a>
+                  )}
+                  <div className="flex items-center justify-between pt-1">
+                    <a
+                      href="/profile"
+                      onClick={(e) => {
+                        setMobileMenuOpen(false);
+                        handleLink('/profile', e);
+                      }}
+                      className="text-xs text-[#20251F] hover:underline"
+                    >
+                      Profile & Addresses
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        logout();
+                      }}
+                      className="text-xs font-medium text-[#B42318]"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </>
               ) : (
                 <a
                   href="/login"
@@ -322,21 +441,26 @@ export default function Navbar({ cartCount = 0, onNavigate, currentPath: propCur
                     setMobileMenuOpen(false);
                     handleLink('/login', e);
                   }}
-                  className="text-sm font-medium text-[#203F2D] hover:underline"
+                  className="text-sm font-medium text-[#203F2D] hover:underline block"
                 >
                   Sign In / Create Account
                 </a>
               )}
-              <a
-                href="/cart"
-                onClick={(e) => {
-                  setMobileMenuOpen(false);
-                  handleLink('/cart', e);
-                }}
-                className="text-sm font-medium text-[#203F2D] hover:underline flex items-center gap-1"
-              >
-                Cart ({cartCount})
-              </a>
+              <div className="pt-1 border-t border-[#E8EAE6]/60 flex items-center justify-between">
+                <a
+                  href="/cart"
+                  onClick={(e) => {
+                    setMobileMenuOpen(false);
+                    handleLink('/cart', e);
+                  }}
+                  className="text-xs font-medium text-[#20251F] hover:text-[#203F2D] flex items-center gap-1.5"
+                >
+                  <span>Shopping Cart</span>
+                  <span className="px-1.5 py-0.2 rounded-full bg-[#203F2D] text-white text-[10px] font-bold">
+                    {cartCount}
+                  </span>
+                </a>
+              </div>
             </div>
           </div>
         )}

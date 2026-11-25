@@ -9,7 +9,14 @@ const API_BASE_URL =
     : '/api/v1');
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem('apnichai_user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch {
+      return null;
+    }
+  });
   const [token, setToken] = useState(() => {
     try {
       return localStorage.getItem('apnichai_token') || null;
@@ -37,6 +44,7 @@ export function AuthProvider({ children }) {
         const data = await response.json();
         if (response.ok && data.success) {
           setUser(data.user);
+          localStorage.setItem('apnichai_user', JSON.stringify(data.user));
         } else {
           // Token invalid or expired
           localStorage.removeItem('apnichai_token');

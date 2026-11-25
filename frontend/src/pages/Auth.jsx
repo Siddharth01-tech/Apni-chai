@@ -107,112 +107,56 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#20251F] flex flex-col justify-between selection:bg-[#EAF0EA] selection:text-[#203F2D]">
+    <div className="min-h-screen bg-white text-[#20251F] flex flex-col justify-between selection:bg-[#EAF0EA] selection:text-[#203F2D]">
       
       {/* =========================================================================
-          TOP NAVBAR (Matching Reference Header)
+          TOP NAVBAR: Clean, Focused Header without customer navigation
           ========================================================================= */}
-      <header className="w-full bg-[#FAF8F5] py-4 px-4 sm:px-8 border-b border-[#EAE3DC]/60">
+      <header className="w-full bg-white py-4 px-4 sm:px-8 border-b border-[#E8EAE6]">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
           {/* Logo */}
           <button
             type="button"
             onClick={() => handleLinkClick('/')}
-            className="flex items-center gap-2 group focus:outline-none cursor-pointer"
+            className="flex items-center gap-2.5 group focus:outline-none cursor-pointer"
+            aria-label="Apni Chai Home"
           >
-            <span className="font-serif font-bold text-2xl text-[#1C3829] tracking-tight">
-              Apni Chai
-            </span>
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#1C3829"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-[#1C3829]"
-            >
-              {/* Minimal leaf / swirl icon */}
-              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-            </svg>
-          </button>
-
-          {/* Center Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-[#20251F]/90">
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              Home
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/menu')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              Chai Menu
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/about')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              Discover
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/orders')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              My Orders
-            </button>
-          </nav>
-
-          {/* Right Actions */}
-          <div className="flex items-center gap-4">
-            {/* Shopping Bag with badge 2 */}
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/cart')}
-              className="relative p-2 text-[#1C3829] hover:bg-black/5 rounded-full transition-colors cursor-pointer"
-              aria-label="Cart"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                <path d="M3 6h18" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
-              </svg>
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#C29D6E] text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none">
-                2
-              </span>
-            </button>
-
-            {/* Login Pill Button */}
-            <button
-              type="button"
-              onClick={() => handleModeSwitch('login')}
-              className={`px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all cursor-pointer ${
-                mode === 'login'
-                  ? 'bg-[#1C3829] text-white shadow-sm'
-                  : 'border border-[#1C3829] text-[#1C3829] hover:bg-[#1C3829] hover:text-white'
-              }`}
-            >
-              Login
-            </button>
-
-            {/* User Icon */}
-            <div className="w-8 h-8 rounded-full bg-[#1C3829] text-white flex items-center justify-center">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="8" r="4" />
-                <path d="M20 21a8 8 0 0 0-16 0" />
+            <div className="w-9 h-9 rounded-full bg-[#EAF0EA] flex items-center justify-center text-[#203F2D] group-hover:bg-[#203F2D] group-hover:text-white transition-colors duration-200">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 11h13a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V11z" />
+                <path d="M17 11v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2v-2" />
+                <path d="M2 19h17" />
+                <path d="M8 4c0 2 1.5 3 1.5 5" strokeWidth="1.7" />
+                <path d="M12 3c0 2 1.5 3 1.5 6" strokeWidth="1.7" />
               </svg>
             </div>
-          </div>
+            <span className="font-serif font-bold text-2xl text-[#20251F] tracking-tight group-hover:text-[#203F2D] transition-colors">
+              Apni Chai
+            </span>
+          </button>
+
+          {/* Focused Back Action */}
+          <button
+            type="button"
+            onClick={() => handleLinkClick('/')}
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-medium text-[#666B65] hover:text-[#203F2D] transition-colors cursor-pointer px-3 py-1.5 rounded-full hover:bg-[#EAF0EA]/60"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            <span>Back to Store</span>
+          </button>
 
         </div>
       </header>
@@ -221,7 +165,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
           CENTER AUTH CARD (Strictly matching reference layout)
           ========================================================================= */}
       <main className="flex-grow flex items-center justify-center px-4 py-8 sm:py-12 md:py-16">
-        <div className="w-full max-w-5xl bg-white rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(28,56,41,0.07)] border border-[#EAE3DC] grid grid-cols-1 md:grid-cols-12 min-h-[580px]">
+        <div className="w-full max-w-5xl bg-white rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(32,63,45,0.08)] border border-[#E8EAE6] grid grid-cols-1 md:grid-cols-12 min-h-[580px]">
           
           {/* -------------------------------------------------------------------
               LEFT COLUMN: Artisanal Visual Banner & Story
@@ -301,14 +245,14 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
           <div className="md:col-span-7 lg:col-span-6 bg-white p-6 sm:p-10 lg:p-12 flex flex-col justify-center">
             
             {/* Top Segmented Pill Toggle */}
-            <div className="bg-[#F3EDE6] p-1 rounded-full flex max-w-xs mb-8 self-center sm:self-start">
+            <div className="bg-[#EAF0EA]/70 p-1 rounded-full flex max-w-xs mb-8 self-center sm:self-start border border-[#E8EAE6]">
               <button
                 type="button"
                 onClick={() => handleModeSwitch('login')}
                 className={`py-2 px-6 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
                   mode === 'login'
-                    ? 'bg-[#1C3829] text-white shadow-sm'
-                    : 'text-[#1C3829] hover:text-black'
+                    ? 'bg-[#203F2D] text-white shadow-sm'
+                    : 'text-[#20251F] hover:text-[#203F2D]'
                 }`}
               >
                 Login
@@ -318,8 +262,8 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                 onClick={() => handleModeSwitch('register')}
                 className={`py-2 px-5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
                   mode === 'register'
-                    ? 'bg-[#1C3829] text-white shadow-sm'
-                    : 'text-[#1C3829] hover:text-black'
+                    ? 'bg-[#203F2D] text-white shadow-sm'
+                    : 'text-[#20251F] hover:text-[#203F2D]'
                 }`}
               >
                 Create Account
@@ -375,7 +319,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Your Full Name"
-                      className="w-full bg-[#F5EFEB] border border-[#EAE3DC] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#1C3829] focus:ring-1 focus:ring-[#1C3829] transition-all"
+                      className="w-full bg-[#F8FAF8] border border-[#E8EAE6] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#203F2D] focus:ring-1 focus:ring-[#203F2D] transition-all"
                     />
                     <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#737871] pointer-events-none">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -399,7 +343,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@domain.com"
-                    className="w-full bg-[#F5EFEB] border border-[#EAE3DC] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#1C3829] focus:ring-1 focus:ring-[#1C3829] transition-all"
+                    className="w-full bg-[#F8FAF8] border border-[#E8EAE6] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#203F2D] focus:ring-1 focus:ring-[#203F2D] transition-all"
                   />
                   <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#737871] pointer-events-none">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -422,7 +366,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+91 98765 43210"
-                      className="w-full bg-[#F5EFEB] border border-[#EAE3DC] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#1C3829] focus:ring-1 focus:ring-[#1C3829] transition-all"
+                      className="w-full bg-[#F8FAF8] border border-[#E8EAE6] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#203F2D] focus:ring-1 focus:ring-[#203F2D] transition-all"
                     />
                     <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#737871] pointer-events-none">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -456,7 +400,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="w-full bg-[#F5EFEB] border border-[#EAE3DC] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#1C3829] focus:ring-1 focus:ring-[#1C3829] transition-all tracking-wider"
+                    className="w-full bg-[#F8FAF8] border border-[#E8EAE6] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#203F2D] focus:ring-1 focus:ring-[#203F2D] transition-all tracking-wider"
                   />
                   <button
                     type="button"
@@ -494,7 +438,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full bg-[#F5EFEB] border border-[#EAE3DC] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#1C3829] focus:ring-1 focus:ring-[#1C3829] transition-all tracking-wider"
+                      className="w-full bg-[#F8FAF8] border border-[#E8EAE6] rounded-xl px-4 py-3.5 pr-10 text-sm text-[#20251F] placeholder:text-[#9A9890] focus:outline-none focus:bg-white focus:border-[#203F2D] focus:ring-1 focus:ring-[#203F2D] transition-all tracking-wider"
                     />
                     <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#737871] pointer-events-none">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -511,7 +455,7 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-[#1C3829] hover:bg-[#254633] active:scale-[0.99] disabled:opacity-70 text-white font-medium py-3.5 px-6 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base transition-all duration-200 shadow-sm cursor-pointer"
+                  className="w-full bg-[#203F2D] hover:bg-[#294B36] active:scale-[0.99] disabled:opacity-70 text-white font-medium py-3.5 px-6 rounded-full flex items-center justify-center gap-2 text-sm sm:text-base transition-all duration-200 shadow-sm cursor-pointer"
                 >
                   {loading ? (
                     <span className="flex items-center gap-2">
@@ -575,61 +519,25 @@ export default function Auth({ initialMode = 'login', onNavigate }) {
       </main>
 
       {/* =========================================================================
-          PAGE FOOTER (Matching Reference Footer)
+          PAGE FOOTER: Clean, focused minimal footer
           ========================================================================= */}
-      <footer className="w-full bg-[#FAF8F5] py-8 px-4 sm:px-8 border-t border-[#EAE3DC]/60 text-xs text-[#70756E]">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
+      <footer className="w-full bg-white py-6 px-4 sm:px-8 border-t border-[#E8EAE6] text-xs text-[#70756E]">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
           
           {/* Left Brand & Italic Tagline */}
-          <div className="flex flex-col items-center sm:items-start">
-            <div className="flex items-center gap-1.5 font-serif font-bold text-lg text-[#1C3829]">
-              <span>Apni Chai</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1C3829" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-              </svg>
-            </div>
-            <p className="font-serif italic text-sm text-[#70756E] mt-0.5">
+          <div className="flex items-center gap-2">
+            <span className="font-serif font-bold text-base text-[#203F2D]">Apni Chai</span>
+            <span className="text-[#9A9890]">·</span>
+            <p className="font-serif italic text-sm text-[#70756E]">
               Har Cup Mein Apnapan.
             </p>
           </div>
 
-          {/* Right Links */}
-          <nav className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-medium text-[#20251F]/80">
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              Home
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/menu')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              Chai Menu
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/orders')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              My Orders
-            </button>
-            <button
-              type="button"
-              onClick={() => handleLinkClick('/about')}
-              className="hover:text-[#1C3829] transition-colors cursor-pointer"
-            >
-              Contact
-            </button>
-          </nav>
+          {/* Copyright */}
+          <div className="text-[11px] text-[#9A9890]">
+            © 2026 Apni Chai. All rights reserved.
+          </div>
 
-        </div>
-
-        {/* Copyright */}
-        <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-[#EAE3DC]/40 text-center sm:text-left text-[11px] text-[#9A9890]">
-          © 2026 Apni Chai. All rights reserved.
         </div>
       </footer>
 

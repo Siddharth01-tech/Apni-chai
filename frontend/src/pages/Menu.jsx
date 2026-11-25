@@ -150,7 +150,7 @@ export default function Menu({ onNavigate, onAddToCart: _onAddToCart }) {
   };
 
   return (
-    <div className="bg-[#FAF8F5] min-h-screen pb-16 pt-8 sm:pt-12 text-[#20251F]">
+    <div className="bg-white min-h-screen pb-16 pt-8 sm:pt-12 text-[#20251F]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ============================================================ */}

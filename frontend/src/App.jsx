@@ -93,7 +93,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF8F5] text-[#20251F] flex flex-col justify-between selection:bg-[#EAF0EA] selection:text-[#203F2D]">
+    <div className="min-h-screen bg-white text-[#20251F] flex flex-col justify-between selection:bg-[#EAF0EA] selection:text-[#203F2D]">
       {/* Toast Notification */}
       {toastMessage && (
         <aside
